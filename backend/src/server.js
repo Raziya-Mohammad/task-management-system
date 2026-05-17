@@ -1,16 +1,33 @@
-import dotenv from "dotenv";
-import app from "./app.js";
-import connectDB from "./config/db.js";
+import express from "express";
+import cors from "cors";
 
-dotenv.config();
+import authRoutes from "./routes/authRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
 
-// Connect Database
-connectDB();
+const app = express();
 
-const PORT = process.env.PORT || 5000;
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://task-management-system-git-main-raziya-mohammad-s-projects.vercel.app",
+      "https://task-management-system-peach-three.vercel.app"
+    ],
+    credentials: true,
+  })
+);
 
-app.listen(PORT, () => {
-  console.log(
-    `Server running on port ${PORT}`
-  );
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message:
+      "Task Management API Running Successfully",
+  });
 });
+
+app.use("/api/auth", authRoutes);
+app.use("/api/tasks", taskRoutes);
+
+export default app;

@@ -28,31 +28,28 @@ const handleSubmit=async(e)=>{
 
 e.preventDefault();
 
-try{
+try {
+  const response = await loginUser(formData);
 
-const data=
-await loginUser(
-formData
-);
+  if (response?.data?.token) {
+    localStorage.setItem(
+      "token",
+      response.data.token
+    );
 
-localStorage.setItem(
-"token",
-data.token
-);
+    window.location = "/dashboard";
+  } else {
+    alert("Invalid response from server");
+  }
 
-navigate(
-"/dashboard"
-);
+} catch (error) {
+  console.log(error);
 
-}catch(error){
-
-alert(
-error.message
-);
-
+  alert(
+    error?.response?.data?.message ||
+    "Login failed"
+  );
 }
-
-};
 
 return(
 
