@@ -13,6 +13,8 @@ import Sidebar from "../components/Sidebar";
 import RightPanel from "../components/RightPanel";
 import StatsCards from "../components/StatsCards";
 import EditTaskModal from "../components/EditTaskModal";
+import Analytics from "../components/Analytics";
+import ProfileCard from "../components/ProfileCard";
 
 function Dashboard(){
 
@@ -27,10 +29,15 @@ localStorage.getItem("user")
 );
 
 const [search,setSearch]=useState("");
-const [filterStatus,setFilterStatus]=useState("All");
-const [selectedMenu,setSelectedMenu]=useState("All");
 
-const [tasks,setTasks]=useState([]);
+const [filterStatus,setFilterStatus]=
+useState("All");
+
+const [selectedMenu,setSelectedMenu]=
+useState("All");
+
+const [tasks,setTasks]=
+useState([]);
 
 const [openModal,setOpenModal]=
 useState(false);
@@ -44,6 +51,7 @@ useState({
 title:"",
 description:"",
 priority:"Medium",
+category:"Personal",
 dueDate:""
 
 });
@@ -76,7 +84,9 @@ localStorage.setItem(
 },[darkMode]);
 
 
-const fetchTasks=async()=>{
+
+const fetchTasks=
+async()=>{
 
 try{
 
@@ -96,6 +106,7 @@ console.log(error);
 };
 
 
+
 useEffect(()=>{
 
 fetchTasks();
@@ -103,7 +114,9 @@ fetchTasks();
 },[]);
 
 
-const handleChange=(e)=>{
+
+const handleChange=
+(e)=>{
 
 setFormData({
 
@@ -115,6 +128,7 @@ e.target.value
 });
 
 };
+
 
 
 const handleSubmit=
@@ -134,6 +148,7 @@ setFormData({
 title:"",
 description:"",
 priority:"Medium",
+category:"Personal",
 dueDate:""
 
 });
@@ -149,6 +164,7 @@ console.log(error);
 };
 
 
+
 const handleDelete=
 async(id)=>{
 
@@ -159,6 +175,7 @@ fetchTasks();
 };
 
 
+
 const handleEdit=
 (task)=>{
 
@@ -167,6 +184,7 @@ setSelectedTask(task);
 setOpenModal(true);
 
 };
+
 
 
 const saveEditedTask=
@@ -184,19 +202,6 @@ setOpenModal(false);
 };
 
 
-const handleStatusChange=
-async(id,status)=>{
-
-await updateTask(
-id,
-{status}
-);
-
-fetchTasks();
-
-};
-
-
 
 const getPriorityColor=
 (priority)=>{
@@ -204,23 +209,33 @@ const getPriorityColor=
 switch(priority){
 
 case "High":
-return "bg-red-500 text-white";
+
+return
+"bg-red-500 text-white";
 
 case "Medium":
-return "bg-yellow-400 text-black";
+
+return
+"bg-yellow-400 text-black";
 
 case "Low":
-return "bg-green-500 text-white";
+
+return
+"bg-green-500 text-white";
 
 default:
-return "bg-gray-500 text-white";
+
+return
+"bg-gray-500 text-white";
 
 }
 
 };
 
 
-const isOverdue=(date)=>{
+
+const isOverdue=
+(date)=>{
 
 if(!date)
 return false;
@@ -243,19 +258,6 @@ task.title
 .includes(
 search.toLowerCase()
 );
-
-const matchesStatus=
-
-filterStatus==="All"
-
-?
-
-true
-
-:
-
-task.status===filterStatus;
-
 
 let menuFilter=true;
 
@@ -287,28 +289,9 @@ task.status==="Pending";
 
 }
 
-else if(
-selectedMenu==="My Day"
-){
-
-const today=
-new Date()
-.toDateString();
-
-menuFilter=
-
-new Date(
-task.createdAt
-).toDateString()
-
-===today;
-
-}
-
 
 return(
 matchesSearch &&
-matchesStatus &&
 menuFilter
 );
 
@@ -318,22 +301,32 @@ menuFilter
 
 return(
 
-<div className={`flex min-h-screen ${
+<div className={`
+
+flex
+min-h-screen
+
+${
 darkMode
 ?
 "bg-gray-900 text-white"
 :
 "bg-gray-100 text-black"
-}`}>
+}
+
+`}>
 
 <Sidebar
 
 user={user}
 
 search={search}
+
 setSearch={setSearch}
 
-selectedMenu={selectedMenu}
+selectedMenu={
+selectedMenu
+}
 
 setSelectedMenu={
 setSelectedMenu
@@ -350,6 +343,7 @@ p-8
 ">
 
 <div className="flex-1">
+
 
 <div className="
 flex
@@ -443,6 +437,9 @@ Logout
 </div>
 
 
+<ProfileCard/>
+
+
 <div className="
 rounded-2xl
 p-8
@@ -472,10 +469,21 @@ Stay organized and complete your goals
 </div>
 
 
-<StatsCards tasks={tasks}/>
+<StatsCards
+tasks={tasks}
+/>
+
+<div className="mb-8">
+
+<Analytics
+tasks={tasks}
+/>
+
+</div>
 
 
 <div className={`
+
 p-6
 rounded-xl
 shadow
@@ -534,6 +542,7 @@ value={formData.description}
 onChange={handleChange}
 />
 
+
 <select
 className="
 w-full
@@ -552,6 +561,30 @@ onChange={handleChange}
 <option>High</option>
 
 </select>
+
+
+
+<select
+className="
+w-full
+border
+p-3
+rounded
+text-black
+"
+name="category"
+value={formData.category}
+onChange={handleChange}
+>
+
+<option>Personal</option>
+<option>Work</option>
+<option>Study</option>
+<option>Shopping</option>
+
+</select>
+
+
 
 <input
 type="date"
@@ -585,16 +618,23 @@ Add Task
 </div>
 
 
-<div className="grid md:grid-cols-2 gap-6">
+
+<div className="
+grid
+md:grid-cols-2
+gap-6
+">
 
 {
 
-filteredTasks.map((task)=>(
+filteredTasks.map(
+(task)=>(
 
 <div
 key={task._id}
 
 className={`
+
 rounded-xl
 p-5
 shadow
@@ -606,16 +646,88 @@ darkMode
 :
 "bg-white"
 }
+
 `}
 >
 
-<h3 className="text-xl font-bold">
+<h3 className="
+text-xl
+font-bold
+">
+
 {task.title}
+
 </h3>
 
-<p className="mt-2 text-gray-500">
+<p className="
+mt-2
+text-gray-500
+">
+
 {task.description}
+
 </p>
+
+
+<p className="mt-3">
+
+📂 Category:
+
+<span className="font-bold">
+
+ {task.category}
+
+</span>
+
+</p>
+
+
+<p>
+
+📅 {
+
+task.dueDate
+
+?
+
+new Date(
+task.dueDate
+)
+.toLocaleDateString()
+
+:
+
+"No date"
+
+}
+
+</p>
+
+
+{
+
+isOverdue(
+task.dueDate
+)
+
+&&
+
+task.status!=="Completed"
+
+?
+
+<p className="
+text-red-500
+font-bold
+">
+
+⚠ Overdue
+
+</p>
+
+:null
+
+}
 
 </div>
 
@@ -627,18 +739,25 @@ darkMode
 
 </div>
 
-<RightPanel tasks={tasks}/>
+<RightPanel
+tasks={tasks}
+/>
 
 </div>
 
 
 <EditTaskModal
+
 task={selectedTask}
+
 isOpen={openModal}
+
 onClose={()=>
 setOpenModal(false)
 }
+
 onSave={saveEditedTask}
+
 />
 
 </div>
