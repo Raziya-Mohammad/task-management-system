@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-
 import authRoutes from "./routes/auth.routes.js";
 import taskRoutes from "./routes/task.routes.js";
 
