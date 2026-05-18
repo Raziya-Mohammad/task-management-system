@@ -1,26 +1,33 @@
 import express from "express";
 import cors from "cors";
 
-import taskRoutes from "./routes/task.routes.js";
+import authRoutes from "./routes/authRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
 
-import authRoutes from "./routes/auth.routes.js";
+const app = express();
 
-const app=express();
-
-app.use(cors());
-app.use(express.json());
-app.use("/api/auth", authRoutes);
-app.use("/api/tasks",taskRoutes);
+// Allow frontend URLs
 app.use(
-"/api/auth",
-authRoutes
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://task-management-system-peach-three.vercel.app",
+      "https://task-management-system-git-main-raziya-mohammad-s-projects.vercel.app"
+    ],
+    credentials: true,
+  })
 );
 
-app.get("/",(req,res)=>{
- res.json({
-  success:true,
-  message:"Task Management API Running Successfully"
- });
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "Task Management API Running Successfully",
+  });
 });
+
+app.use("/api/auth", authRoutes);
+app.use("/api/tasks", taskRoutes);
 
 export default app;
