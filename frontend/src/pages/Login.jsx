@@ -24,32 +24,44 @@ e.target.value
 
 };
 
-const handleSubmit=async(e)=>{
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-e.preventDefault();
+  try {
 
-try {
-  const response = await loginUser(formData);
+    const response = await loginUser(formData);
 
-  if (response?.data?.token) {
-    localStorage.setItem(
-      "token",
-      response.data.token
+    if(response?.token){
+
+      localStorage.setItem(
+        "token",
+        response.token
+      );
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify(response.user)
+      );
+
+      navigate("/dashboard");
+
+    }else{
+
+      alert("Invalid response from server");
+
+    }
+
+  } catch(error){
+
+    console.log(error);
+
+    alert(
+      error?.response?.data?.message ||
+      "Login failed"
     );
 
-    window.location = "/dashboard";
-  } else {
-    alert("Invalid response from server");
   }
-
-} catch (error) {
-  console.log(error);
-
-  alert(
-    error?.response?.data?.message ||
-    "Login failed"
-  );
-}
+};
 
 return(
 
@@ -91,6 +103,20 @@ className="w-full bg-blue-600 text-white p-3 rounded"
 Login
 
 </button>
+<p className="text-center mt-4">
+
+Don't have an account?
+
+<button
+onClick={()=>navigate("/register")}
+className="text-blue-600 ml-2"
+>
+
+Register
+
+</button>
+
+</p>
 
 </form>
 
