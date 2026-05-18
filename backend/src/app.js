@@ -13,17 +13,17 @@ app.use(
       "https://task-management-system-peach-three.vercel.app",
       "https://task-management-system-git-main-raziya-mohammad-s-projects.vercel.app"
     ],
-    credentials: true,
+    credentials: true
   })
 );
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.json({
-    success: true,
-    message: "Task Management API Running Successfully",
-  });
+app.get("/", (req,res)=>{
+   res.json({
+      success:true,
+      message:"Task Management API Running Successfully"
+   });
 });
 
 app.use("/api/auth", authRoutes);
