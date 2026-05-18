@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+
 import {
-  getTasks,
-  deleteTask,
-  updateTask
-} from "../services/taskService";
+getTasks,
+deleteTask,
+updateTask
+}
+from "../services/taskService";
 
 import API from "../api/axios";
 
@@ -17,6 +19,11 @@ function Dashboard(){
 const [darkMode,setDarkMode]=
 useState(
 localStorage.getItem("theme")==="dark"
+);
+
+const user=
+JSON.parse(
+localStorage.getItem("user")
 );
 
 const [search,setSearch]=useState("");
@@ -321,6 +328,8 @@ darkMode
 
 <Sidebar
 
+user={user}
+
 search={search}
 setSearch={setSearch}
 
@@ -413,6 +422,10 @@ onClick={()=>{
 
 localStorage.removeItem(
 "token"
+);
+
+localStorage.removeItem(
+"user"
 );
 
 window.location="/";
@@ -603,80 +616,6 @@ darkMode
 <p className="mt-2 text-gray-500">
 {task.description}
 </p>
-
-<div className="mt-2">
-
-<p>
-
-📅 {
-
-task.dueDate
-?
-new Date(
-task.dueDate
-).toLocaleDateString()
-:
-"No date"
-
-}
-
-</p>
-
-{
-
-isOverdue(
-task.dueDate
-)
-
-&&
-
-task.status!=="Completed"
-
-?
-
-<p className="text-red-500 font-bold">
-⚠ Overdue
-</p>
-
-:null
-
-}
-
-</div>
-
-<div className="mt-3">
-
-<span
-className={`px-3 py-1 rounded-full text-sm font-semibold ${getPriorityColor(task.priority)}`}
->
-
-{task.priority}
-
-</span>
-
-</div>
-
-<div className="flex gap-3 mt-4">
-
-<button
-className="bg-blue-600 text-white px-4 py-2 rounded"
-onClick={()=>
-handleEdit(task)
-}
->
-Edit
-</button>
-
-<button
-className="bg-red-500 text-white px-4 py-2 rounded"
-onClick={()=>
-handleDelete(task._id)
-}
->
-Delete
-</button>
-
-</div>
 
 </div>
 

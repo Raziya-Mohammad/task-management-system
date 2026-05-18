@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
 
-const navigate=useNavigate();
+const navigate = useNavigate();
 
-const [formData,setFormData]=useState({
+const [formData,setFormData] = useState({
 email:"",
 password:""
 });
@@ -24,43 +24,55 @@ e.target.value
 
 };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+const handleSubmit = async(e)=>{
 
-  try {
+e.preventDefault();
 
-    const response = await loginUser(formData);
+try{
 
-    if(response?.token){
+const response=
+await loginUser(formData);
 
-      localStorage.setItem(
-        "token",
-        response.token
-      );
+console.log(response);
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify(response.user)
-      );
+if(response?.token){
 
-      navigate("/dashboard");
+localStorage.setItem(
+"token",
+response.token
+);
 
-    }else{
+localStorage.setItem(
+"user",
+JSON.stringify(
+response.user
+)
+);
 
-      alert("Invalid response from server");
+navigate("/dashboard");
 
-    }
+}else{
 
-  } catch(error){
+alert(
+"Invalid response from server"
+);
 
-    console.log(error);
+}
 
-    alert(
-      error?.response?.data?.message ||
-      "Login failed"
-    );
+}catch(error){
 
-  }
+console.log(error);
+
+alert(
+
+error?.response?.data?.message ||
+
+"Login failed"
+
+);
+
+}
+
 };
 
 return(
@@ -99,16 +111,20 @@ onChange={handleChange}
 <button
 className="w-full bg-blue-600 text-white p-3 rounded"
 >
-Login
-</button>
 
+Login
+
+</button>
 
 <p className="text-center mt-4">
 
 Don't have an account?
 
 <button
-onClick={()=>navigate("/register")}
+type="button"
+onClick={()=>
+navigate("/register")
+}
 className="text-blue-600 ml-2"
 >
 

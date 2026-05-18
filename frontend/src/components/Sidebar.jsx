@@ -1,5 +1,7 @@
 function Sidebar({
 
+user,
+
 search,
 setSearch,
 
@@ -8,63 +10,63 @@ setSelectedMenu
 
 }){
 
-const menuItems=[
+const menus=[
 
-{
-name:"My Day",
-icon:"🗓️"
-},
-
-{
-name:"Important",
-icon:"⭐"
-},
-
-{
-name:"Planned",
-icon:"📝"
-},
-
-{
-name:"Completed",
-icon:"✅"
-}
+"My Day",
+"Important",
+"Planned",
+"Completed"
 
 ];
 
 return(
 
-<div className="w-64 h-screen bg-white shadow-lg p-6">
-
-<div className="flex items-center gap-3 mb-10">
+<div className="
+w-80
+bg-white
+shadow
+p-8
+">
 
 <div className="
-w-12
-h-12
+flex
+items-center
+gap-4
+mb-10
+">
+
+<div className="
+w-14
+h-14
 rounded-full
 bg-purple-500
 text-white
 flex
 items-center
 justify-center
+text-xl
 font-bold
 ">
 
-R
+{
+user?.name
+?.charAt(0)
+?.toUpperCase()
+}
 
 </div>
 
 <div>
 
-<h3 className="font-bold">
+<h2 className="font-bold text-xl">
 
-Raziya
+{user?.name}
 
-</h3>
+</h2>
 
-<p className="text-sm text-gray-500">
+<p className="text-gray-500">
 
-raziya@gmail.com
+{user?.email}
 
 </p>
 
@@ -74,6 +76,8 @@ raziya@gmail.com
 
 
 <input
+
+type="text"
 
 placeholder="Search"
 
@@ -90,44 +94,42 @@ e.target.value
 className="
 w-full
 border
-rounded-lg
 p-3
-mb-8
+rounded
+mb-10
 "
+
 />
 
 
-<div className="space-y-3">
+<div className="space-y-4">
 
 {
 
-menuItems.map((item)=>(
+menus.map((menu)=>(
 
-<div
+<button
 
-key={item.name}
+key={menu}
 
 onClick={()=>
-
-setSelectedMenu(
-item.name
-)
-
+setSelectedMenu(menu)
 }
 
 className={`
 
+block
+w-full
+text-left
 p-3
 rounded
-cursor-pointer
-transition
 
 ${
-selectedMenu===item.name
+selectedMenu===menu
 
 ?
 
-"bg-blue-500 text-white"
+"bg-blue-600 text-white"
 
 :
 
@@ -139,13 +141,9 @@ selectedMenu===item.name
 
 >
 
-{item.icon}
+{menu}
 
-{" "}
-
-{item.name}
-
-</div>
+</button>
 
 ))
 
