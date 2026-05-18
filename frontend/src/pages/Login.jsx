@@ -99,10 +99,23 @@ onChange={handleChange}
 <button
 className="w-full bg-blue-600 text-white p-3 rounded"
 >
-
 Login
-
 </button>
+
+<p className="text-center mt-4">
+
+Don't have an account?
+
+<span
+onClick={()=>navigate("/register")}
+className="text-blue-600 cursor-pointer ml-2"
+>
+
+Register
+
+</span>
+
+</p>
 <p className="text-center mt-4">
 
 Don't have an account?
