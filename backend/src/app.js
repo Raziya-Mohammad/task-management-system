@@ -6,7 +6,6 @@ import taskRoutes from "./routes/taskRoutes.js";
 
 const app = express();
 
-// Allow frontend URLs
 app.use(
   cors({
     origin: [
