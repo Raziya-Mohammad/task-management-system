@@ -9,10 +9,11 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
+      "https://task-management-system-git-main-raziya-mohammad-s-projects.vercel.app",
       "https://task-management-system-peach-three.vercel.app",
-      "https://task-management-system-git-main-raziya-mohammad-s-projects.vercel.app"
+      "https://task-management-system-2nk19sskq-raziya-mohammad-s-projects.vercel.app"
     ],
-    credentials: true
+    credentials: true,
   })
 );
 
