@@ -2,6 +2,8 @@
 
 A full-stack Task Management System built using MERN Stack.
 
+“This is a MERN-based Task Management System with JWT authentication. Users can register, log in, create/manage tasks, assign priorities and categories, and view dashboard statistics. MongoDB Atlas is used for cloud storage, Render hosts the backend, and Vercel hosts the frontend.”
+
 ## Features
 - User Registration & Login
 - JWT Authentication
